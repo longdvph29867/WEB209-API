@@ -93,9 +93,10 @@ class ProductsCotroller {
 
       const data = { ...req.body };
       data.slug = slugify(data.name, { lower: true });
-      if (data.slug != req.params.slug) {
+      if (data.id != req.params.id) {
         const productExists = await Products.findOne({
           slug: data.slug,
+          _id: { $ne: req.params.id },
         });
         if (productExists) {
           res.status(404).json({
